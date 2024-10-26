@@ -1,0 +1,6 @@
+<div class="container">
+  Hi {{$array['name']}},<br>
+  @php
+  echo \App\Models\Sendmail::where('mailto','=', 'participate')->first()->body;
+  @endphp
+</div>
