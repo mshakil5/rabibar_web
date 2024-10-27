@@ -66,6 +66,16 @@
                                         </select>
                                     </div>
 
+                                    <div> 
+                                        <label for="short_description">Short Description</label>
+                                        <textarea name="short_description" id="short_description" class="form-control ckeditor"></textarea> 
+                                    </div>
+                                    
+                                    <div> 
+                                        <label for="long_description">Long Description</label>
+                                        <textarea name="long_description" id="long_description" class="form-control ckeditor"></textarea> 
+                                    </div>
+
 
                                     <hr>
                                     <input type="button" id="addBtn" value="Create" class="btn btn-primary">
@@ -108,6 +118,8 @@
                                           <th>Title</th>
                                           <th>Link</th>
                                           <th>Position</th>
+                                          <th>Short Description</th>
+                                          <th>Long Description</th>
                                           <th>Action</th>
                                         </tr>
                                         </thead>
@@ -122,6 +134,8 @@
                                               <td>{{$data->title}}</td>
                                               <td>{{$data->link}}</td>
                                               <td>{{$data->position}}</td>
+                                              <td>{!! $data->short_description !!}</td>
+                                              <td>{!! $data->long_description !!}</td>
                                               <td>
                                                 <a id="EditBtn" rid="{{$data->id}}"><i class="fa fa-edit" style="color: #2196f3;font-size:16px;"></i></a>
                                                 <a id="deleteBtn" rid="{{$data->id}}"><i class="fa fa-trash-o" style="color: red;font-size:16px;"></i></a>
@@ -145,7 +159,6 @@
    
 @endsection
 @section('script')
-    <script src="//cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>
     <script>
     // CKEDITOR.replace( 'details' );
     </script>
@@ -180,6 +193,8 @@
                     form_data.append("title", $("#title").val());
                     form_data.append("link", $("#link").val());
                     form_data.append("position", $("#position").val());
+                    form_data.append("short_description", CKEDITOR.instances.short_description.getData());
+                    form_data.append("long_description", CKEDITOR.instances.long_description.getData());
 
                     $.ajax({
                       url: url,
@@ -210,6 +225,8 @@
                   form_data.append("title", $("#title").val());
                   form_data.append("link", $("#link").val());
                   form_data.append("position", $("#position").val());
+                  form_data.append("short_description", CKEDITOR.instances.short_description.getData());
+                  form_data.append("long_description", CKEDITOR.instances.long_description.getData());
                   form_data.append("codeid", $("#codeid").val());
 
                     // console.log(image);
@@ -286,6 +303,8 @@
                 $("#title").val(data.title);
                 $("#link").val(data.link);
                 $("#position").val(data.position);
+                CKEDITOR.instances.short_description.setData(data.short_description);
+                CKEDITOR.instances.long_description.setData(data.long_description);
                 $("#codeid").val(data.id);
                 // $("#image").val(data.image);
                 $("#addBtn").val('Update');
@@ -295,6 +314,8 @@
             function clearform(){
                 $('#createThisForm')[0].reset();
                 $("#addBtn").val('Create');
+                CKEDITOR.instances.short_description.setData('');
+                CKEDITOR.instances.long_description.setData('');
             }
         });
     </script>

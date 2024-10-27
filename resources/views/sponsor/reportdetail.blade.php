@@ -92,7 +92,7 @@
                                             <tr>
                                                 <td>{{$n++}}</td>
                                                 <td>{{$data->quiz}}</td>
-                                                <td>{{$data->description}}</td>
+                                                <td>{!! $data->description !!}</td>
                                                 <td>{{$data->created_at}}</td>
                                             </tr>
                                         @empty

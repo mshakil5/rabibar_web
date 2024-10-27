@@ -26,6 +26,8 @@ class CreateVideoBlogsTable extends Migration
             $table->string('meta_tag')->nullable();
             $table->string('meta_description')->nullable();
             $table->string('tag')->nullable();
+            $table->longText('short_description')->nullable();
+            $table->longText('long_description')->nullable();
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();
             $table->timestamps();

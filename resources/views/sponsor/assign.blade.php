@@ -140,7 +140,6 @@
 
 @endsection
 @section('script')
-<script src="//cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>
 
 {{-- sweetalart code --}}
 <script>

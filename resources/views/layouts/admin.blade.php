@@ -256,6 +256,14 @@
      <script type="text/javascript" src="{{ asset('assets/frontend/js/plugins/chart.js')}}"></script>
      {{-- <script src="{{ asset('js/jquery.js')}}"></script> --}}
      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+
+     <script src="//cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>
+     <script>
+        CKEDITOR.config.versionCheck = false;
+        $('.ckeditor').each(function () {
+            CKEDITOR.replace(this);
+        });
+    </script>
      
     <!-- for export all -->
     <script src="{{URL::to('assets/js/dataTables/datatables.min.js')}}"></script>

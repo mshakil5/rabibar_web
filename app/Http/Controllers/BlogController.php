@@ -297,6 +297,8 @@ class BlogController extends Controller
             $data->title= $request->title;
             $data->position= $request->position;
             $data->link= $request->link;
+            $data->short_description= $request->short_description;
+            $data->long_description= $request->long_description;
             $data->created_by= Auth::user()->id;
             $data->save();
 
@@ -326,6 +328,8 @@ class BlogController extends Controller
         $post->title = $request->title;
         $post->position = $request->position;
         $post->link = $request->link;
+        $post->short_description = $request->short_description;
+        $post->long_description = $request->long_description;
         $post->updated_by = Auth::user()->id;
         if ($post->save()) {
             $message ="<div class='alert alert-success'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><b>Data Updated Successfully.</b></div>";

@@ -387,7 +387,6 @@
 
         })
     </script>
-    <script src="//cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
              $("#company-detail").addClass('active');
