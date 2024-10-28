@@ -31,7 +31,7 @@
                         <iframe width="100%" height="195px" src="{{ $data->link }}" frameborder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowfullscreen data-toggle="modal" data-target="#videoModal" data-video="{{ $data->link }}" class="video-link"></iframe>
-                        <h4 class="blog-title">{{ $data->title }}</h4>
+                        <h4 class="blog-title" style="cursor: pointer;">{{ $data->title }}</h4>
                     </div>
                 @endforeach
             </div>

@@ -55,15 +55,17 @@
                           <li class="nav-item">
                             <a class="nav-link" href="{{route('blog')}}">Blog</a>
                           </li>
+                          {{-- 
                           <li class="nav-item">
                             <a class="nav-link" href="{{route('frontend.videoblog')}}">Video Blog</a>
                           </li>
                           <li class="nav-item">
                             <a class="nav-link" href="{{route('frontend.spinner')}}">Spinner</a>
                           </li>
+                          --}}
                     </ul>
 
-
+                    {{--  
                     <ul class="navbar-nav ml-auto mb-2 mb-lg-0 login-control mobileheight">
                         @guest
                             @if (Route::has('register'))
@@ -102,7 +104,7 @@
 
                         @endguest
                     </ul>
-
+                    --}}
 
                 </div>
             </div>

@@ -87,7 +87,8 @@ Auth::routes();
 //user registration
 Route::post('user/register', [RegisterController::class, 'userRegistration']);
 
-Route::get('/', [App\Http\Controllers\IndexController::class, 'index'])->name('mainhome');
+// Route::get('/', [App\Http\Controllers\IndexController::class, 'index'])->name('mainhome');
+Route::get('/', [App\Http\Controllers\BlogController::class, 'videoblogShow'])->name('mainhome');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/blog', [App\Http\Controllers\BlogController::class, 'blogShow'])->name('blog');
 Route::get('/blog-details/{id}', [App\Http\Controllers\BlogController::class, 'blogdetails'])->name('blog.details');
