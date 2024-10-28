@@ -436,24 +436,43 @@ class BlogController extends Controller
 
     // video blog show
 
-    public function videoblogShow()
-    {
+    // public function videoblogShow()
+    // {
         
 
-        $blogs= DB::table('video_blogs')
-                ->select('video_blogs.*','video_cats.id as bid','video_cats.name',)
-                ->join('video_cats','video_cats.id','=','video_blogs.category_id')
-                ->get();
-        // dd($blogs);
+    //     $blogs= DB::table('video_blogs')
+    //             ->select('video_blogs.*','video_cats.id as bid','video_cats.name',)
+    //             ->join('video_cats','video_cats.id','=','video_blogs.category_id')
+    //             ->get();
+    //     // dd($blogs);
 
-        $cats = VideoCat::all();
+    //     $cats = VideoCat::all();
 
-        $animels = DB::table('video_blogs')
-                ->select('video_blogs.*','video_cats.id as bid','video_cats.name',)
-                ->join('video_cats','video_cats.id','=','video_blogs.category_id')
-                ->where('video_cats.name', '=', 'Trending videos')
-                ->orderBy('created_at', 'DESC')
-                ->get();
-        return view('frontend.videoblog', compact('cats','blogs','animels'));
+    //     $animels = DB::table('video_blogs')
+    //             ->select('video_blogs.*','video_cats.id as bid','video_cats.name',)
+    //             ->join('video_cats','video_cats.id','=','video_blogs.category_id')
+    //             ->where('video_cats.name', '=', 'Trending videos')
+    //             ->orderBy('created_at', 'DESC')
+    //             ->get();
+    //     return view('frontend.videoblog', compact('cats','blogs','animels'));
+    // }
+
+    public function videoblogShow()
+    {
+        $blogs = VideoBlog::with(['category:id,name'])
+            ->select('id', 'title', 'link', 'category_id', 'created_at')
+            ->get();
+
+        $cats = VideoCat::select('id', 'name')->get();
+
+        $animels = VideoBlog::with(['category:id,name'])
+            ->whereHas('category', function ($query) {
+                $query->where('name', 'Trending videos');
+            })
+            ->orderBy('created_at', 'DESC')
+            ->select('id', 'title', 'link', 'category_id', 'created_at')
+            ->get();
+
+        return view('frontend.videoblog', compact('cats', 'blogs', 'animels'));
     }
 }

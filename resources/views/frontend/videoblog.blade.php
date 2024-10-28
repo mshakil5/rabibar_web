@@ -6,9 +6,9 @@
         <div class="left">
             @foreach (App\Models\VideoBlog::where('position', '=', 'left')->orderBy('created_at', 'desc')->limit(1)->get() as $data)
                 <div class="item">
-                    <iframe width="100%" height="400px" src="{{ $data->link }}" frameborder="0"
+                    <iframe width="100%" height="400px" data-src="{{ $data->link }}" frameborder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen data-toggle="modal" data-target="#videoModal" data-video="{{ $data->link }}" class="video-link"></iframe>
+                            allowfullscreen data-toggle="modal" data-target="#videoModal" data-video="{{ $data->link }}" class="video-link lazyload-iframe"></iframe>
                     <h4 class="blog-title" style="cursor: pointer;">{{ $data->title }}</h4>
                 </div>
             @endforeach
@@ -17,9 +17,9 @@
             <div class="top">
                 @foreach (App\Models\VideoBlog::where('position', '=', 'top')->orderBy('created_at', 'desc')->limit(2)->get() as $data)
                     <div class="item">
-                        <iframe width="100%" height="195px" src="{{ $data->link }}" frameborder="0"
+                        <iframe width="100%" height="195px" data-src="{{ $data->link }}" frameborder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowfullscreen data-toggle="modal" data-target="#videoModal" data-video="{{ $data->link }}" class="video-link"></iframe>
+                                allowfullscreen data-toggle="modal" data-target="#videoModal" data-video="{{ $data->link }}" class="video-link lazyload-iframe"></iframe>
                         <h4 class="blog-title">{{ $data->title }}</h4>
                     </div>
                 @endforeach
@@ -28,9 +28,9 @@
             <div class="bottom">
                 @foreach (App\Models\VideoBlog::where('position', '=', 'bottom')->orderBy('created_at', 'desc')->limit(2)->get() as $data)
                     <div class="item">
-                        <iframe width="100%" height="195px" src="{{ $data->link }}" frameborder="0"
+                        <iframe width="100%" height="195px" data-src="{{ $data->link }}" frameborder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowfullscreen data-toggle="modal" data-target="#videoModal" data-video="{{ $data->link }}" class="video-link"></iframe>
+                                allowfullscreen data-toggle="modal" data-target="#videoModal" data-video="{{ $data->link }}" class="video-link lazyload-iframe"></iframe>
                         <h4 class="blog-title" style="cursor: pointer;">{{ $data->title }}</h4>
                     </div>
                 @endforeach
@@ -57,10 +57,10 @@
                     <div class="blog-box">
                         <div class="blog-images">
                             <div class="photo">
-                                <iframe width="100%" height="195px" src="{{ $item->link }}" frameborder="0"
+                                <iframe width="100%" height="195px" data-src="{{ $item->link }}" frameborder="0"
                                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                         allowfullscreen data-toggle="modal" data-target="#videoModal" 
-                                        data-video="{{ $item->link }}" class="video-link"></iframe>
+                                        data-video="{{ $item->link }}" class="video-link lazyload-iframe"></iframe>
                             </div>
                         </div>
                         <div class="details">
@@ -93,9 +93,9 @@
                             <div class="blog-box">
                                 <div class="blog-images">
                                     <div class="photo">
-                                        <iframe width="100%" height="195px" src="{{ $video->link }}" frameborder="0" 
+                                        <iframe width="100%" height="195px" data-src="{{ $video->link }}" frameborder="0" 
                                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                                allowfullscreen class="video-link" data-toggle="modal" data-target="#videoModal" 
+                                                allowfullscreen class="video-link lazyload-iframe" data-toggle="modal" data-target="#videoModal" 
                                                 data-video="{{ $video->link }}"></iframe>
                                     </div>
                                 </div>
@@ -125,7 +125,7 @@
                 
             <div class="modal-body p-2 pb-0">
                 <button type="button" class="btn-close position-absolute top-0 end-0 m-2" style="background-color: #fff; border-radius: 50%; padding: 0.5rem;" aria-label="Close" data-bs-dismiss="modal"></button>
-                <iframe id="modalVideo" width="100%" height="400px" src="" frameborder="0"
+                <iframe id="modalVideo" width="100%" height="400px" data-src="" frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen></iframe>
             </div>
@@ -148,18 +148,29 @@
 
         $('#videoModal').on('hidden.bs.modal', function() {
             $('#modalVideo').attr('src', '');
-            $('#videoModal').modal('hide');
         });
 
-        $(document).on('click', '.video-link, .blog-title', function(e) {
-            e.preventDefault();
-            
-            var videoUrl = $(this).closest('.item').find('iframe').attr('data-video');
- 
-            $('#modalVideo').attr('src', videoUrl);
+        var lazyloadIframes = document.querySelectorAll('iframe.lazyload-iframe');
+        
+        if ("IntersectionObserver" in window) {
+            var iframeObserver = new IntersectionObserver(function (entries, observer) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        var iframe = entry.target;
+                        iframe.src = iframe.getAttribute('data-src');
+                        iframeObserver.unobserve(iframe);
+                    }
+                });
+            });
 
-            $('#videoModal').modal('show');
-        });
+            lazyloadIframes.forEach(function (iframe) {
+                iframeObserver.observe(iframe);
+            });
+        } else {
+            lazyloadIframes.forEach(function (iframe) {
+                iframe.src = iframe.getAttribute('data-src');
+            });
+        }
     });
 
     var swiper = new Swiper('.swiper-container', {
@@ -168,7 +179,7 @@
         centeredSlides: false,
         spaceBetween: 10,
         grabCursor: true,
-        loop: true,
+        loop: false,
         pagination: '.swiper-pagination',
         paginationClickable: true,
         autoplay: {

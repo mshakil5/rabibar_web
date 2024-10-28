@@ -193,7 +193,8 @@
                                 window.setTimeout(function(){location.reload()},2000)
                           }
                       },
-                      error: function (d) {
+                      error: function (xhr , status, error) {
+                          console.log(xhr.responseText);
                           console.log(d);
                       }
                   });

@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome to Rabibar -Knowledge base Quiz Platform- Bangladesh</title>
     <meta name="Description" CONTENT="Rabibar - Knowledge base quiz platform. Free join - win smartphone, mobile and many others - Bangladesh">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="{{ asset('assets/css/bootstrap.min.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/css/app.css')}}">
     <link href="https://unpkg.com/swiper/swiper-bundle.min.css" rel="stylesheet" />
@@ -19,8 +19,6 @@
     {{-- new css --}}
     <link rel="stylesheet" href="{{asset('assets/frontend/css/smoothproducts.css')}}">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
-        integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
         integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
@@ -229,8 +227,6 @@
                             @endphp
 
                             <iframe width="100%" height="200px" src="{{ asset('videos/'.$video) }}" title="YouTube video player" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-                            {{-- <iframe width="100%" height="200px" src="https://www.youtube.com/embed/YmsuQuw-GtY" title="YouTube video player" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> --}}
                         </div>
 
                     </div>
@@ -262,7 +258,7 @@
     <script src="{{ asset('assets/js/bootstrap.min.js')}}"></script>
     <script src="https://code.iconify.design/2/2.0.1/iconify.min.js"></script>
     <script src="https://rawgit.com/guillaumepotier/Parsley.js/2.3.7/dist/parsley.js"></script>
-    <script src='{{ asset('assets/js/app.js')}}'> </script>
+    <script src="{{ asset('assets/js/app.js') }}"></script>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     @yield('script')
 

@@ -218,7 +218,6 @@
                             @foreach (App\Models\VideoBlog::where('position', '=', 'footer')->orderBy('created_at', 'DESC')->limit(1)->get() as $footer)
                                 <iframe width="100%" height="200px" src="{{ $footer->link }}" title="YouTube video player" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                             @endforeach
-                            {{-- <iframe width="100%" height="200px" src="https://www.youtube.com/embed/YmsuQuw-GtY" title="YouTube video player" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> --}}
                         </div>
 
                     </div>
