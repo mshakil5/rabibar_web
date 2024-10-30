@@ -110,10 +110,11 @@
 
         <div class="authentication">
             @guest
+            {{--  
                 <a href="{{ route('register') }}">
                     <span class="iconify" data-icon="bx:bxs-user-rectangle" data-inline="false"></span>
                     Sign Up</a>
-                <a href="{{ route('login') }}"><span class="iconify" data-icon="bx:bxs-lock" data-inline="false"></span> Login</a>
+                <a href="{{ route('login') }}"><span class="iconify" data-icon="bx:bxs-lock" data-inline="false"></span> Login</a> --}}
                 <!--<a href="#"><span class="iconify" data-icon="entypo-social:facebook" data-inline="false"></span> Facebook Login</a>-->
             @else
 
