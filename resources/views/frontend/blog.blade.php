@@ -11,7 +11,7 @@
                 
 
 
-            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+            <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
                 <a href="{{route('blog.details', encrypt($item->id))}}">
                     <div class="blog-box">
                         <div class="blog-images">

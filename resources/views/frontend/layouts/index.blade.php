@@ -223,11 +223,18 @@
                             <h3>How to do </h3>
                         </div>
                         <div class="footer-text mb-25">
-                            @php
+                            {{-- @php
                                 $video =App\Models\Video::where('position', '=', 'footer')->where('status', '=', 1)->first()->name;
                             @endphp
 
-                            <iframe width="100%" height="200px" src="{{ asset('videos/'.$video) }}" title="YouTube video player" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            <iframe width="100%" height="200px" src="{{ asset('videos/'.$video) }}" title="YouTube video player" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> --}}
+
+                            <!-- top-hori -->
+                            <ins class="adsbygoogle"
+                            style="display:inline-block;width:100%;height:90px"
+                            data-ad-client="ca-pub-6244464154064262"
+                            data-ad-slot="9784636548"></ins>
+
                         </div>
 
                     </div>
@@ -344,6 +351,13 @@
 
 <script type="text/javascript" src="{{ asset('assets/js/bootstrap-notify.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/js/bootstrap-notify.min.js') }}"></script>
+
+
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+
 </body>
 
 </html>

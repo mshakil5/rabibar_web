@@ -86,10 +86,10 @@
                 {{ $data->name }}
             </h4>
 
-            <div class="swiper-container">
-                <div class="swiper-wrapper">
+            <div class="">
+                <div class="row px-4">
                     @foreach (App\Models\VideoBlog::where('category_id', '=', $data->id)->orderBy('created_at', 'desc')->limit(8)->get() as $video)
-                        <div class="swiper-slide">
+                        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                             <div class="blog-box">
                                 <div class="blog-images">
                                     <div class="photo">
@@ -110,8 +110,6 @@
                     @endforeach
                 </div>
 
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
             </div>
         </section>
     @endforeach
