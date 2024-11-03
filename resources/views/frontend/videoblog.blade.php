@@ -88,7 +88,7 @@
 
             <div class="">
                 <div class="row px-4">
-                    @foreach (App\Models\VideoBlog::where('category_id', '=', $data->id)->orderBy('created_at', 'desc')->limit(8)->get() as $video)
+                    @foreach (App\Models\VideoBlog::where('category_id', '=', $data->id)->orderBy('created_at', 'desc')->get() as $video)
                         <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                             <div class="blog-box">
                                 <div class="blog-images">
