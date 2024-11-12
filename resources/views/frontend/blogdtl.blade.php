@@ -10,10 +10,10 @@
         <div class="row">
             <div class="col-lg-8 ">
                 <div class="blog-content">
-                    <div class="feature-image">
+                    {{-- <div class="feature-image">
                         <img src="{{url('blogimage/'.$blogdtls->photo)}}" alt="">
-                        {{-- <img src="https://royalscripts.com/product/geniuscart/fashion/assets/images/blogs/15542700322-min.jpg" alt=""> --}}
-                    </div>
+                        <img src="https://royalscripts.com/product/geniuscart/fashion/assets/images/blogs/15542700322-min.jpg" alt="">
+                    </div> --}}
                     <div class="content border p-4">
                         <h3 class="title">
                             {{ $blogdtls->title }}
@@ -209,7 +209,15 @@
                                 <li>
                                     <div class="post">
                                         <div class="post-img">
-                                            <img style="width: 73px; height: 59px;" src="{{url('blogimage/'.$blog->photo)}}" alt="">
+
+                                            @if ($blog->photo)
+                                                <img style="width: 73px; height: 59px;" src="{{url('blogimage/'.$blog->photo)}}" alt="">
+                                            @else
+                                            
+                                                <img src="{{url('company/'.\App\Models\CompanyDetail::first()->company_logo)}}" class="" alt="">
+                                            @endif
+
+                                            
                                         </div>
                                         <div class="post-details">
                                             <a href="{{route('blog.details', encrypt($blog->id))}}">

@@ -7,7 +7,6 @@
         <div class="app-title">
             <div>
                 <h1><i class="fa fa-dashboard"></i> Dashboard</h1>
-                <p>A free and open source Bootstrap 4 admin template</p>
             </div>
             <ul class="app-breadcrumb breadcrumb">
                 <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
@@ -112,7 +111,11 @@
                                               <td>{{$data->name}}</td>
                                               <td>{{$data->title}}</td>
                                               <td>{!!$data->details!!}</td>
-                                              <td><img src="{{asset('blogimage/'.$data->photo)}}" height="50px" width="50px" alt=""></td>
+                                              <td>
+                                                @if ($data->photo)
+                                                    <img src="{{asset('blogimage/'.$data->photo)}}" height="50px" width="50px" alt="">
+                                                    @endif
+                                                </td>
                                               <td>
                                                 <a id="EditBtn" rid="{{$data->id}}"><i class="fa fa-edit" style="color: #2196f3;font-size:16px;"></i></a>
                                                 <a id="deleteBtn" rid="{{$data->id}}"><i class="fa fa-trash-o" style="color: red;font-size:16px;"></i></a>
@@ -172,6 +175,9 @@
                     CKEDITOR.instances[instance].updateElement();
                     }  
                     var file_data = $('#image').prop('files')[0];
+                        if(typeof file_data === 'undefined'){
+                            file_data = 'null';
+                        }
                     var form_data = new FormData();
                     form_data.append("category", $("#category").val());
                     form_data.append("title", $("#title").val());
@@ -186,6 +192,7 @@
                       processData: false,
                       data:form_data,
                       success: function (d) {
+                        console.log(d);
                           if (d.status == 303) {
                               $(".ermsg").html(d.message);
                           }else if(d.status == 300){
@@ -195,7 +202,6 @@
                       },
                       error: function (xhr , status, error) {
                           console.log(xhr.responseText);
-                          console.log(d);
                       }
                   });
                 }

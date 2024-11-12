@@ -14,9 +14,14 @@
             <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
                 <a href="{{route('blog.details', encrypt($item->id))}}">
                     <div class="blog-box">
-                        <div class="blog-images">
+                        <div class="blog-images" style="min-height: 220px;">
                             <div class="photo">
-                                <img src="{{url('blogimage/'.$item->photo)}}" class="" alt="">
+                                @if ($item->photo)
+                                    <img src="{{url('blogimage/'.$item->photo)}}" class="" alt="">
+                                @else
+                                
+                                    <img src="{{url('company/'.\App\Models\CompanyDetail::first()->company_logo)}}" class="" alt="">
+                                @endif
                                 {{-- <img src="https://royalscripts.com/product/geniuscart/fashion/assets/images/blogs/15542700464-min.jpg" class="" alt=""> --}}
                             </div>
                             <div class="box-date">
@@ -24,7 +29,7 @@
                                 <p>{{ date('M', strtotime($item->created_at)) }}</p>
                             </div>
                         </div>
-                        <div class="details">
+                        <div class="details" style="min-height: 170px;">
                             <a href="{{route('blog.details', encrypt($item->id))}}">
                                 <h4 class="blog-title">
                                     {{ $item->title }}
