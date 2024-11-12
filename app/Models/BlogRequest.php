@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class BlogCategory extends Model
+class BlogRequest extends Model
 {
     use HasFactory;
 
-    public function blogs()
+    public function blog()
     {
-        return $this->hasMany(Blog::class, 'category_id');
+        return $this->belongsTo(Blog::class, 'blog_id');
     }
 }

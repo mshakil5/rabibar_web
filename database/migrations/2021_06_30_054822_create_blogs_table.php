@@ -22,7 +22,7 @@ class CreateBlogsTable extends Migration
             $table->string('photo')->nullable();
             $table->string('source')->nullable();
             $table->string('views')->nullable();
-            $table->string('status')->nullable();
+            $table->boolean('status')->default(0);
             $table->string('meta_tag')->nullable();
             $table->string('meta_description')->nullable();
             $table->string('tag')->nullable();

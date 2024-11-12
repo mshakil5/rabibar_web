@@ -12,6 +12,8 @@ use App\Models\BlogCategory;
 use Illuminate\Http\Request;
 // use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Models\BlogRequest;
+use Illuminate\Support\Facades\Validator;
 
 class BlogController extends Controller
 {
@@ -22,11 +24,7 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $blogs= DB::table('blogs')
-                ->select('blogs.*','blog_categories.id as bid','blog_categories.name',)
-                ->join('blog_categories','blog_categories.id','=','blogs.category_id')
-                ->paginate(10);
-        // dd($blogs);
+        $blogs = Blog::with('request')->paginate(10);
 
         $cats = BlogCategory::all();
         return view('blog.index', compact('cats','blogs'));
@@ -361,6 +359,7 @@ class BlogController extends Controller
         $blogs= DB::table('blogs')
                 ->select('blogs.*','blog_categories.id as bid','blog_categories.name',)
                 ->join('blog_categories','blog_categories.id','=','blogs.category_id')
+                ->where('blogs.status', 1)
                 ->paginate(9);
         // dd($blogs);
 
@@ -378,7 +377,7 @@ class BlogController extends Controller
         // dd($blogdtls);
 
         $cats = BlogCategory::all();
-        $blogs = Blog::all();
+        $blogs = Blog::where('status', '=', '1')->get();
         // $comments = Comment::where('blog_id', '=', decrypt($id))->get();
 
 
@@ -477,5 +476,71 @@ class BlogController extends Controller
             ->get();
 
         return view('frontend.videoblog', compact('cats', 'blogs', 'animels'));
+    }
+
+    public function makeblog()
+    {
+        $categories = BlogCategory::select('id', 'name')->get();
+        return view('frontend.make_blog', compact('categories'));
+    }
+
+    public function makeblogStore(Request $request)
+    {
+        $request->validate([
+            'category' => 'required|exists:blog_categories,id',
+            'title' => 'required|string|max:255',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'source' => 'required|string|max:255',
+            'details' => 'required|string',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'required|string|max:20',
+            'address' => 'required|string',
+            'message' => 'required|string',
+        ]);
+
+        $data = new Blog();
+        $data->category_id = $request->category;
+        $data->title = $request->title;
+
+        if ($request->hasFile('image')) {
+            $rand = mt_rand(100000, 999999);
+            $imageName = time() . $rand . '.' . $request->image->extension();
+            $request->image->move(public_path('blogimage'), $imageName);
+            $data->photo = $imageName;
+        }
+
+        $data->details = $request->details;
+        $data->source = $request->source;
+        $data->save();
+
+        $blogRequest = new BlogRequest();
+        $blogRequest->blog_id = $data->id;
+        $blogRequest->name = $request->name;
+        $blogRequest->email = $request->email;
+        $blogRequest->phone = $request->phone;
+        $blogRequest->address = $request->address;
+        $blogRequest->message = $request->message;
+        $blogRequest->status = 0;
+        $blogRequest->save();
+
+        return response()->json(['status' => 200, 'message' => 'Blog created successfully!']);
+    }
+
+    public function updateBlogStatus(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'id' => 'required',
+            'status' => 'required|boolean',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 400);
+        }
+
+        $blog = Blog::find($request->id);
+        $blog->status = $request->status;
+        $blog->save();
+        return response()->json(['success' => 'Status updated successfully.']);
     }
 }

@@ -13,31 +13,31 @@
 
             <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
                 <a href="{{route('blog.details', encrypt($item->id))}}">
-                    <div class="blog-box">
-                        <div class="blog-images" style="min-height: 220px;">
+                    <div class="blog-box" style="height: 400px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div class="blog-images" style="min-height: 220px; position: relative;">
                             <div class="photo">
                                 @if ($item->photo)
-                                    <img src="{{url('blogimage/'.$item->photo)}}" class="" alt="">
+                                    <img src="{{url('blogimage/'.$item->photo)}}" style="max-height: 100%; width: 100%; object-fit: cover;" alt="">
                                 @else
-                                
-                                    <img src="{{url('company/'.\App\Models\CompanyDetail::first()->company_logo)}}" class="" alt="">
+                                    <img src="{{url('company/'.\App\Models\CompanyDetail::first()->company_logo)}}" style="max-height: 100%; width: 100%; object-fit: cover;" alt="">
                                 @endif
-                                {{-- <img src="https://royalscripts.com/product/geniuscart/fashion/assets/images/blogs/15542700464-min.jpg" class="" alt=""> --}}
                             </div>
-                            <div class="box-date">
+                            <div class="box-date" style="position: absolute; bottom: 10px; right: 10px;">
                                 <p>{{ date('d', strtotime($item->created_at)) }}</p>
                                 <p>{{ date('M', strtotime($item->created_at)) }}</p>
                             </div>
                         </div>
-                        <div class="details" style="min-height: 170px;">
+                        <div class="details" style="max-height: 120px; overflow: hidden; flex-grow: 1;">
                             <a href="{{route('blog.details', encrypt($item->id))}}">
                                 <h4 class="blog-title">
                                     {{ $item->title }}
                                 </h4>
                             </a>
                             <p class="blog-text">
-                                {{ substr(strip_tags($item->details), 0, 120) }}
+                                {!! Str::limit($item->details , 80) !!}
                             </p>
+                        </div>
+                        <div style="margin-top: auto;">
                             <a class="btn-theme" href="{{route('blog.details', encrypt($item->id))}}">Read More</a>
                         </div>
                     </div>

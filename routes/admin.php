@@ -109,6 +109,7 @@ Route::group(['prefix' =>'admin/', 'middleware' => ['auth', 'is_admin']], functi
 
     //blog
     Route::resource('blog','App\Http\Controllers\BlogController');
+    Route::post('/blog/update-status', [BlogController::class, 'updateBlogStatus'])->name('blog.update.status');
     Route::get('/blog-category', [BlogController::class, 'blogCategory'])->name('blog.category');
     Route::post('/blog-category', [BlogController::class, 'blogCategoryStore'])->name('blog.category');
     Route::get('/blog-category/{id}/edit', [BlogController::class, 'blogCategoryEdit'])->name('blog.category.edit');

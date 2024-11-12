@@ -13,7 +13,7 @@
         @endforeach
         </div>
         <div class="col-md-8 p-0 border-left border-right  ">  
-                <h2 class="text-center">
+                <h2 class="text-center mt-5 pb-5">
                     @php
                         echo \App\Models\About::where('softcode','=', 'about')->first()->hardcode;
                     @endphp

@@ -11,6 +11,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\BlogController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -102,6 +103,10 @@ Route::get('/spinner', [App\Http\Controllers\IndexController::class, 'spinner'])
 // video blog show
 Route::get('/video-blog', [App\Http\Controllers\BlogController::class, 'videoblogShow'])->name('frontend.videoblog');
 
+
+//Make a blog
+Route::get('/make-a-blog', [BlogController::class, 'makeblog'])->name('frontend.makeblog');
+Route::post('/make-a-blog', [BlogController::class, 'makeblogStore'])->name('frontend.makeblog');
 
 //quiz insert
 Route::post('/quiz-answer', [App\Http\Controllers\IndexController::class, 'registeredQuiz']);

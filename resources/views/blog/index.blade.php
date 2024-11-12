@@ -101,6 +101,7 @@
                                           <th>title</th>
                                           <th>Details</th>
                                           <th>Image</th>
+                                          <th>Status</th>
                                           <th>Action</th>
                                         </tr>
                                         </thead>
@@ -116,7 +117,22 @@
                                                     <img src="{{asset('blogimage/'.$data->photo)}}" height="50px" width="50px" alt="">
                                                     @endif
                                                 </td>
+                                                <td>
+                                                    <a href="#" class="statusToggle" rid="{{$data->id}}" data-status="{{$data->status}}">
+                                                        <i class="fa {{ $data->status == 1 ? 'fa-toggle-on' : 'fa-toggle-off' }}" style="font-size: 24px; color: {{ $data->status == 1 ? 'green' : 'red' }};"></i>
+                                                    </a>
+                                                </td>
                                               <td>
+                                              @if ($data->request)
+                                              <a id="viewRequestBtn" rid="{{$data->id}}"
+                                                data-name="{{ $data->request->name }}"
+                                                data-email="{{ $data->request->email }}"
+                                                data-phone="{{ $data->request->phone }}"
+                                                data-address="{{ $data->request->address }}"
+                                                data-message="{{ $data->request->message }}">
+                                                <i class="fa fa-eye" style="color: green; font-size:16px;"></i>
+                                            </a>
+                                            @endif
                                                 <a id="EditBtn" rid="{{$data->id}}"><i class="fa fa-edit" style="color: #2196f3;font-size:16px;"></i></a>
                                                 <a id="deleteBtn" rid="{{$data->id}}"><i class="fa fa-trash-o" style="color: red;font-size:16px;"></i></a>
                                               </td>
@@ -137,7 +153,46 @@
 
 
     </main>
-   
+
+<!-- Modal Structure -->
+<div id="blogRequestModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="blogRequestModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="blogRequestModalLabel">Blog Request Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <p><strong>Name:</strong> <span id="requestName"></span></p>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6 col-sm-12">
+                        <p><strong>Email:</strong> <span id="requestEmail"></span></p>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <p><strong>Phone:</strong> <span id="requestPhone"></span></p>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <p><strong>Address:</strong> <span id="requestAddress"></span></p>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <p><strong>Message:</strong> <span id="requestMessage"></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection
 @section('script')
     <script>
@@ -311,7 +366,26 @@
             function clearform(){
                 $('#createThisForm')[0].reset();
                 $("#addBtn").val('Create');
+                for (let instance in CKEDITOR.instances) {
+                    CKEDITOR.instances[instance].setData('');
+                }
             }
+
+            $(document).on('click', '#viewRequestBtn', function() {
+                var name = $(this).data('name');
+                var email = $(this).data('email');
+                var phone = $(this).data('phone');
+                var address = $(this).data('address');
+                var message = $(this).data('message');
+
+                $('#requestName').text(name);
+                $('#requestEmail').text(email);
+                $('#requestPhone').text(phone);
+                $('#requestAddress').text(address);
+                $('#requestMessage').text(message);
+
+                $('#blogRequestModal').modal('show');
+            });
         });
     </script>
     <script type="text/javascript">
@@ -321,5 +395,37 @@
             $("#blogpost").addClass('active');
         });
     </script>
+
+<script>
+    $(document).on('click', '.statusToggle', function(e) {
+        e.preventDefault();
+
+        var $this = $(this);
+        var id = $this.attr('rid');
+        var currentStatus = $this.data('status');
+        var newStatus = currentStatus === 1 ? 0 : 1;
+
+        $.ajax({
+            url: '/admin/blog/update-status',
+            method: 'POST',
+            data: {
+                id: id,
+                status: newStatus,
+                _token: '{{ csrf_token() }}'
+            },
+            success: function(response) {
+                $this.data('status', newStatus);
+                if (newStatus === 1) {
+                    $this.find('i').removeClass('fa-toggle-off').addClass('fa-toggle-on').css('color', 'green');
+                } else {
+                    $this.find('i').removeClass('fa-toggle-on').addClass('fa-toggle-off').css('color', 'red');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.log(xhr.responseText);
+            }
+        });
+    });
+</script>
    
 @endsection

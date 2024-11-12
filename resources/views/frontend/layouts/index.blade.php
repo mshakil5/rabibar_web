@@ -287,6 +287,14 @@
     </script>
     {{-- new script end --}}
 
+    <script src="//cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>
+     <script>
+        CKEDITOR.config.versionCheck = false;
+        $('.ckeditor').each(function () {
+            CKEDITOR.replace(this);
+        });
+    </script>
+
 
 
     <script>

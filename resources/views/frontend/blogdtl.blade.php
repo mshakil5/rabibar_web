@@ -171,7 +171,7 @@
             <div class="col-lg-4">
                 <div class="blog-aside">
                     <div class="serch-form">
-                        <form action="https://royalscripts.com/product/geniuscart/fashion/blog-search">
+                        <form action="#">
                             <input type="text" name="search" placeholder="Search" required="">
                             <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
                         </form>
@@ -185,10 +185,9 @@
                             @foreach ($cats as $data)
                                 
                                 <li>
-                                    <a
-                                        href="https://royalscripts.com/product/geniuscart/fashion/blog/category/oil-and-gas">
+                                    <a>
                                         <span>{{ $data->name }}</span>
-                                        <span>(7)</span>
+                                        <span>({{ $data->blogs->count() }})</span>
                                     </a>
                                 </li>
 
